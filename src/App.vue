@@ -6,7 +6,15 @@
 
 <script>
 export default {
-    name: 'app'
+    name: 'app',
+    created (){
+    	localStorage.address = "未知";
+    	this.axios.get("https://zhaoplus.com/api/ip").then(res=>{
+    		if(res.data.content.address){
+    			localStorage.address = res.data.content.address;
+    		}
+    	})
+    }
 }
 </script>
 <style lang="scss">

@@ -20,7 +20,37 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
+var http = require("http")
+const https = require('https');
+
 var app = express()
+
+//配置服务器端<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+const server = http.createServer(app);
+
+const io = require('socket.io')(server);
+
+let bodyParser = require('body-parser');
+// var multer = require('multer');
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// app.use(multer()); // for parsing multipart/form-data
+
+io.on('connection', (socket) => {
+
+  // 监听群聊
+  socket.on('sendGroupMsg', function (data) {
+    io.sockets.emit('receiveGroupMsg', data);
+  });
+
+  // 监听上线
+  socket.on('online', name => {
+    io.sockets.emit('online', name)
+  });
+
+})
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -79,7 +109,8 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = app.listen(port)
+// var server = app.listen(port)
+server.listen(8080);
 
 module.exports = {
   ready: readyPromise,

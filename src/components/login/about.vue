@@ -45,11 +45,8 @@
 			position:absolute;
 			right:.5rem;
 			top:0;
-			color:#fff;
-			transition:all 3s;
-		}
-		.about-close:hover{
 			color:red;
+			transition:all 3s;
 		}
 		.about-content{
 			line-height:1.5rem;

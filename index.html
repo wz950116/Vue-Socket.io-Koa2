@@ -7,6 +7,21 @@
   </head>
   <body>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+	
+	<script src="https://microzz.com:3000/socket.io/socket.io.js"></script>
+	<script>
+		//socket.io 连接服务器
+		const socket = io.connect('https://microzz.com:3000/');
+	</script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			//保证第一个引入的js文件
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?ce268e8f61069a1636a4629acbb82b9a";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+    	})();
+	</script>
   </body>
 </html>
