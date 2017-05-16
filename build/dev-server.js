@@ -20,17 +20,19 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
-var http = require("http")
-const https = require('https');
 
 var app = express()
 
 //配置服务器端<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-const server = http.createServer(app);
+const server = require('http').Server(app);
 
 const io = require('socket.io')(server);
 
-let bodyParser = require('body-parser');
+const http = require('http');
+
+const https = require('https');
+
+var bodyParser = require('body-parser');
 // var multer = require('multer');
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -39,14 +41,15 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 io.on('connection', (socket) => {
 
-  // 监听群聊
+
+  // 群聊
   socket.on('sendGroupMsg', function (data) {
-    io.sockets.emit('receiveGroupMsg', data);
+    socket.broadcast.emit('receiveGroupMsg', data);
   });
 
-  // 监听上线
+  // 上线
   socket.on('online', name => {
-    io.sockets.emit('online', name)
+    socket.broadcast.emit('online', name)
   });
 
 })

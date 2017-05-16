@@ -35,7 +35,7 @@
 				<div class="chat-txt">
 					<textarea type="text" class="chat-input" placeholder="左上角还有智能机器人哦" v-model.trim="msg">
 					</textarea>
-					<button class="chat-send" @click="send()">发送</button>
+					<button class="chat-send" @keyup.enter="send">发送</button>
 				</div>
 			</div>
 		</div>
